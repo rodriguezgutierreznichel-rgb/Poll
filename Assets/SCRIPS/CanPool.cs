@@ -22,6 +22,9 @@ public class CanPool : MonoBehaviour
             Destroy(this);
         }
 
+
+
+
         for (int i = 0; i < maxElements; i++)
         {
             GameObject lata = Instantiate(prefabs);
@@ -32,6 +35,14 @@ public class CanPool : MonoBehaviour
 
     public GameObject PopObject()
     {
+        if (maxElements <= 0)
+        {
+            Debug.Log("Balas insuficientes");
+            return null;
+        }
+
+        maxElements--;
+
         GameObject objectToReturn = null;
         if (pool.Count != 0)
         {
@@ -54,6 +65,12 @@ public class CanPool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+    public void Recargar()
+    {
+        maxElements = 3;
+        Debug.Log("valas actuales" + maxElements);
         
     }
 }

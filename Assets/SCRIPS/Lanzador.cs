@@ -38,7 +38,15 @@ public class Lanzador : MonoBehaviour
 
         Vector3 direction = (puntoDestino - puntoOrigen).normalized;
 
-        GameObject proyectilDisparado = Instantiate(proyectil);
+        GameObject proyectilDisparado = CanPool.instance.PopObject();
+        
+        if (proyectilDisparado == null)
+        {
+            Debug.Log("Balas insuficientes");
+            return;
+        }
+        proyectilDisparado.SetActive(true);
+
         proyectilDisparado.transform.rotation = Quaternion.LookRotation(direction);
         proyectilDisparado.transform.position = puntoOrigen;
         proyectilDisparado.GetComponent<Rigidbody>().AddForce(direction * shootingForce, ForceMode.Impulse);
@@ -47,6 +55,9 @@ public class Lanzador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            CanPool.instance.Recargar();
+        }
     }
 }
